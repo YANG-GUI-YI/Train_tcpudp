@@ -3,6 +3,8 @@ import socket
 
 HOST = "127.0.0.1"
 PORT = 5000
+BUFFER_SIZE = 4096
+received_size = 0
 
 def recv_exact(conn, size):
     data = bytearray()
@@ -26,8 +28,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
         header = recv_exact(conn, 8)
         file_size = int.from_bytes(header, "big")
 
-        print("預期接收：", file_size, "bytes")
-        data = recv_exact(conn, file_size)
-        print("實際接收：", len(data), "bytes")
-        conn.sendall(b"ok")
+        with open("received.bin", "wb") as file:
+
+            while received_size < file_size:
+
+                remaining = file_size - received_size
+
+                data = conn.recv(min(BUFFER_SIZE, remaining))
+
+                if not data:
+                    raise ConnectionError("檔案尚未傳輸完成，連線已中斷")
+
+                file.write(data)
+
+                received_size += len(data)
+
+                print(f"接收進度：{received_size}/{file_size}")
+
+        print("檔案接收完成！")
+
 print("傳輸完成，Server 已斷線")
+
