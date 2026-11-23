@@ -13,7 +13,7 @@ def calculate_sha256(file_path):
     return sha.hexdigest()
 
 source_file = BASE_DIR / "position_zero.png"
-received_file = BASE_DIR / "received.png"
+received_file = BASE_DIR / "received_files" / "position_zero.png"
 
 source_hash = calculate_sha256(source_file)
 received_hash = calculate_sha256(received_file)

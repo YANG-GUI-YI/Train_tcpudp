@@ -7,13 +7,23 @@ PORT = 5000
 BUFFER_SIZE = 4096
 
 BASE_DIR = Path(__file__).resolve().parent
-FILE_PATH = BASE_DIR / "position_zero.png"
+FILE_PATH = BASE_DIR / "test.txt"
 
 # 取得檔案大小
 file_size = FILE_PATH.stat().st_size
 
+FILE_NAME = FILE_PATH.name
+NAME_DATA = FILE_NAME.encode("utf-8")
+name_size = len(NAME_DATA)
+
+if name_size > 255:
+    raise ValueError("檔案名稱過長，無法傳送")
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     client.connect((HOST, PORT))
+
+    client.sendall(name_size.to_bytes(2, "big"))
+    client.sendall(NAME_DATA)
 
     # 傳送 8 Bytes 的檔案大小
     header = file_size.to_bytes(8, "big")
