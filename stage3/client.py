@@ -2,7 +2,7 @@
 import socket
 from pathlib import Path
 
-HOST = "127.0.0.1"
+HOST = "140.125.111.95"
 PORT = 5000
 BUFFER_SIZE = 4096
 
