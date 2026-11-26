@@ -1,7 +1,7 @@
 import socket
 from pathlib import Path
 
-HOST = "0.0.0.0"
+HOST = "192.168.56.1"
 PORT = 5000
 BUFFER_SIZE = 4096
 MAX_FILE_SIZE = 100 * 1024 * 1024
