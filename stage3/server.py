@@ -45,7 +45,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
         ):
             raise ValueError("檔名不合法")
 
-        
         header = recv_exact(conn, 8)
         file_size = int.from_bytes(header, "big")
 
@@ -57,9 +56,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
         save_path = SAVE_DIR / FILE_NAME
         
         received_size = 0
-        print("目前工作目錄：", Path.cwd())
-        print("預計儲存位置：", SAVE_DIR / FILE_NAME)
-        print("來源設定是否為 PNG：", (SAVE_DIR / FILE_NAME).suffix == ".png")
         with open(SAVE_DIR / FILE_NAME, "xb") as file:
             while received_size < file_size:
                 remaining = file_size - received_size

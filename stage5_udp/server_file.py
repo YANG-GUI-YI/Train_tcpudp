@@ -1,4 +1,3 @@
-
 import socket
 import json
 import hashlib
@@ -22,7 +21,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server:
     # 1. 接收 START
     while True:
         packet, client_addr = server.recvfrom(4096)
-
+        print("已建立UDP 連線 ")
         if packet[:1] == b"S":
             break
 
@@ -57,7 +56,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server:
         not isinstance(expected_hash, str)
         or len(expected_hash) != 64
         or any(c not in "0123456789abcdef"
-               for c in expected_hash)
+            for c in expected_hash)
     ):
         raise ValueError("不合法的 SHA-256")
 
@@ -71,7 +70,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server:
     # 2. 接收 DATA / END
     try:
         while not (end_received and
-                   len(chunks) == total_chunks):
+                len(chunks) == total_chunks):
 
             packet, addr = server.recvfrom(4096)
 

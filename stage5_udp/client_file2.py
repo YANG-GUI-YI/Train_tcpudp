@@ -1,4 +1,3 @@
-
 import socket
 import struct
 import json
@@ -55,11 +54,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
             # Type: D (1 Byte)
             # Sequence: 4 Bytes
             header = struct.pack("!cI", b"D", seq)
-            if seq == 2:
-                # 模擬丟包，跳過傳送 Chunk 2
-                print(f"模擬丟包，跳過 Chunk 2")
-            else:
-                client.sendto(header + chunk, target)
+            client.sendto(header + chunk, target)
 
             print(f"傳送 Chunk {seq}, {len(chunk)} Bytes")
 

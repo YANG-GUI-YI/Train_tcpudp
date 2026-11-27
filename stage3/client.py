@@ -1,8 +1,7 @@
-
 import socket
 from pathlib import Path
 
-HOST = "140.125.111.95"
+HOST = "192.168.56.1"
 PORT = 5000
 BUFFER_SIZE = 4096
 
@@ -21,6 +20,7 @@ if name_size > 255:
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     client.connect((HOST, PORT))
+    print("已建立TCP連線")
 
     client.sendall(name_size.to_bytes(2, "big"))
     client.sendall(NAME_DATA)

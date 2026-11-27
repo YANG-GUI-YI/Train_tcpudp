@@ -7,7 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent
 
 # 組合檔案路徑
 source_path = BASE_DIR / "test.txt"
-received_path = BASE_DIR / "received.txt"
+content = bytearray()
+
 BUFFER_SIZE = 4096  
 with open(source_path, "rb") as source:
     count = 0
@@ -19,7 +20,6 @@ with open(source_path, "rb") as source:
         if not data:
             print("已到達 EOF，結束讀取")
             break
+        content.extend(data)
 
-
-print("目前工作目錄：", os.getcwd())
-print("程式所在位置：", Path(__file__).resolve().parent)
+print(content.decode("utf-8"))
